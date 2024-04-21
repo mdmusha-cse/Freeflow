@@ -33,6 +33,7 @@ export async function createUserWithEmailAndPassword(object: FirebaseAuthProps) 
         .createUserWithEmailAndPassword(object?.email, object?.password)
         .then((res) => {
             console.log('User account created & signed in!');
+            return res;
         })
         .catch(error => {
             if (error.code === 'auth/email-already-in-use') {
@@ -42,6 +43,7 @@ export async function createUserWithEmailAndPassword(object: FirebaseAuthProps) 
             if (error.code === 'auth/invalid-email') {
                 console.log('That email address is invalid!');
             }
+            return error;
         });
 }
 
@@ -51,6 +53,7 @@ export async function signInWithEmailAndPassword(object: FirebaseAuthProps) {
         .signInWithEmailAndPassword(object?.email, object?.password)
         .then((res) => {
             console.log('User account created & signed in!');
+            return res;
         })
         .catch(error => {
             if (error.code === 'auth/email-already-in-use') {
@@ -60,6 +63,7 @@ export async function signInWithEmailAndPassword(object: FirebaseAuthProps) {
             if (error.code === 'auth/invalid-email') {
                 console.log('That email address is invalid!');
             }
+            return error;
         });
 }
 
@@ -71,8 +75,9 @@ export async function userDataAddToDatabase(object: FirebaseUserProps) {
             email: object?.email,
             uid: object?.uid
         })
-        .then(() => {
+        .then((res) => {
             console.log('User added!');
+            return res;
         });
 }
 
@@ -81,6 +86,7 @@ export async function name(object: FirebaseUidProps) {
     user.forEach(snapshot => {
         let data = snapshot.data();
     })
+    return user;
 }
 
 export async function drawPathsRealtimeWriteToFirestore(object: FirebaseDrawPathsProps) {
@@ -90,8 +96,9 @@ export async function drawPathsRealtimeWriteToFirestore(object: FirebaseDrawPath
         .set({
             paths: object?.paths
         })
-        .then(() => {
+        .then((res) => {
             console.log('User added!');
+            return res;
         });
 }
 
@@ -101,6 +108,7 @@ export async function drawPathsRealtimeReadFromStore() {
         .doc('paths')
         .onSnapshot(documentSnapshot => {
             console.log('User data: ', documentSnapshot.data());
+            return documentSnapshot.data();
         });
 }
 
@@ -116,8 +124,9 @@ export async function chatDataWriteRealtimeToDatabase(object: chatDataProps) {
             uid: object?.uid,
             msg: object?.msg
         })
-        .then(() => {
+        .then((res) => {
             console.log('Data updated.');
+            return res;
         });
 }
 
@@ -127,6 +136,7 @@ export async function chatDataReadRealtimeToDatabase() {
         .on('value', snapshot => {
 
             console.log(Object.values(snapshot.val()));
+            return Object.values(snapshot.val());
 
         });
 }
